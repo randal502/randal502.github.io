@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randal Real Estate Agency</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #014976;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        .section {
+            background: #ffffff;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #e8491d;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #333333;
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 48%; /* Slightly less than 50% to account for spacing */
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        footer {
+            background-color: #35424a; 
+            color: white; 
+            text-align: center; 
+            padding: 10px; 
+            position: relative; 
+            bottom: 0; 
+            width: 100%;
+        }
+        @media(max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Randal Real Estate Agency</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section" id="featured-properties">
+            <h2>Select your Properties</h2>
+            <div class="image-container">
+                <img src="house1.jpg" alt="House 1">
+                <img src="house2.jpg" alt="House 2">
+            </div>
+        </div>
+
+        <div class="section" id="mortgage">
+            <h2>Mortgage Calculator</h2>
+            <form id="mortgage-form">
+                <input type="number" id="loan-amount" placeholder="Loan Amount" required>
+                <input type="number" id="interest-rate" placeholder="Interest Rate (%)" required>
+                <input type="number" id="loan-term" placeholder="Loan Term (years)" required>
+                <button type="submit">Calculate</button>
+            </form>
+            <div id="mortgage-result"></div>
+        </div>
+
+        <!-- Removed Contact Form Section -->
+        <div class="section" id="contact">
+            <h2>Contact Us</h2>
+              <!-- Added Contact Information -->
+              <p><strong>Name:</strong> Randal Senathunge</p>
+              <p><strong>Mobile Number:</strong> +61 04000001</p>
+              <p><strong>Email:</strong> randalprop@gmail.com</p>
+          </div>
+
+          <div class="section" id="viewing">
+              <h2>Request Property Viewing</h2>
+              <form id="viewing-form">
+                  <input type="text" id="name" placeholder="Your Name" required>
+                  <!--input type="email" id="email" placeholder="Your Email" required -->
+                  <input type="number" id="contact Number" placeholder="+61 Number" required>
+                  <input type="text" id="property" placeholder="Property Address" required>
+                  <input type="date" id="date" required>
+                  <textarea id="message" placeholder="Comments"></textarea>
+                  <button type="submit">Request Viewing</button>
+              </form>
+          </div>
+
+      </div>
+
+      <!-- Footer Section -->
+      <footer>
+          ICT502 Internet and Web Development Individual Assignment
+      </footer>
+
+      <script>
+          // Mortgage calculator
+          const mortgageForm = document.getElementById('mortgage-form');
+          const mortgageResult = document.getElementById('mortgage-result');
+
+          mortgageForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+              const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+              const loanTerm = parseFloat(document.getElementById('loan-term').value) * 12;
+
+              const monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
+
+              mortgageResult.textContent = `Estimated monthly payment: $${monthlyPayment.toFixed(2)}`;
+          });
+
+          // Viewing request form
+          const viewingForm = document.getElementById('viewing-form');
+          viewingForm.addEventListener('submit', function(e) {
+             e.preventDefault();
+             alert('Viewing request submitted. Randal will contact you soon!');
+             viewingForm.reset();
+         });
+      </script>
+</body>
+</html>
