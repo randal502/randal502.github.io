@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randal Real Estate Agency</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            font-family: 'Lucida Handwriting', cursive;
+            background: #048af7;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        .section {
+            background: #ffffff;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select, button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #e8491d;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #333333;
+        }
+        #property-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .property-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .property-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #35424a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media(max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Group 4 Real Estate Agency</h1>
+            <nav>
+                <a href="index.html">Home Page</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section" id="search-filter">
+            <h2>Search and Filter Properties</h2>
+            <input type="text" id="search-input" placeholder="Search by address or description">
+            <select id="type-filter">
+                <option value="">All Types</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="condo">Condo</option>
+            </select>
+            <input type="number" id="min-price" placeholder="Min Price">
+            <input type="number" id="max-price" placeholder="Max Price">
+            <button onclick="filterProperties()">Search</button>
+        </div>
+
+        <div class="section" id="property-list">
+            <!-- Property cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer>
+        ICT502 Internet and Web Development Individual Assignment
+    </footer>
+
+    <script>
+        // Sample property data
+        const properties = [
+            { id: 1, type: 'house', price: 500000, address: '123 Main St', description: 'Beautiful 3-bedroom house', image: 'https://example.com/house1.jpg' },
+            { id: 2, type: 'apartment', price: 300000, address: '456 Elm St', description: 'Modern 2-bedroom apartment', image: 'https://example.com/apartment1.jpg' },
+            { id: 3, type: 'condo', price: 400000, address: '789 Oak St', description: 'Luxurious 1-bedroom condo', image: 'https://example.com/condo1.jpg' },
+            // Add more properties as needed
+        ];
+
+        function displayProperties(propertiesToShow) {
+            const propertyList = document.getElementById('property-list');
+            propertyList.innerHTML = '';
+            propertiesToShow.forEach(property => {
+                const propertyCard = document.createElement('div');
+                propertyCard.className = 'property-card';
+                propertyCard.innerHTML = `
+                    <img src="${property.image}" alt="${property.address}">
+                    <h3>${property.address}</h3>
+                    <p>${property.description}</p>
+                    <p>Type: ${property.type}</p>
+                    <p>Price: $${property.price}</p>
+                `;
+                propertyList.appendChild(propertyCard);
+            });
+        }
+
+        function filterProperties() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const typeFilter = document.getElementById('type-filter').value;
+            const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
+
+            const filteredProperties = properties.filter(property => 
+                (property.address.toLowerCase().includes(searchTerm) || 
+                 property.description.toLowerCase().includes(searchTerm)) &&
+                (typeFilter === '' || property.type === typeFilter) &&
+                property.price >= minPrice && property.price <= maxPrice
+            );
+
+            displayProperties(filteredProperties);
+        }
+
+        // Initial display of all properties
+        displayProperties(properties);
+    </script>
+</body>
+</html>
